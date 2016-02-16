@@ -13,6 +13,10 @@ module.exports = {
       minLength: 6,
       required: true
     },
+      applications: {
+          collection: 'Application',
+          via: 'user'
+      },
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
