@@ -1,29 +1,18 @@
-"use strict";
-let passport = require('passport');
+/**
+ * AuthController
+ *
+ * @module      :: Controller
+ * @description	:: Provides the base authentication
+ *                 actions used to make waterlock work.
+ *
+ * @docs        :: http://waterlock.ninja/documentation
+ */
 
-module.exports = {
-    _config: {
-        actions: false,
-        shortcuts: false,
-        rest: false
-    },
-    login: function(req, res) {
-        passport.authenticate('local', function(err, user, info) {
-            if ((err) || (!user)) {
-                return res.redirect('/login');
-
-            }
-            req.logIn(user, function(err) {
-                if (err) res.send(err);
-                return res.send({
-                    message: info.message,
-                    user: user
-                });
-            });
-        })(req, res);
-    },
-    logout: function(req, res) {
-        req.logout();
-        res.redirect('/');
+module.exports = require('waterlock').waterlocked({
+  /* e.g.
+    action: function(req, res){
+  
     }
-};
+  */
+
+});

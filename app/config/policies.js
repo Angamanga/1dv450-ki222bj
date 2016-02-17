@@ -1,9 +1,7 @@
 module.exports.policies = {
-
   '*': true,
-
   'PostController': {
-    '*': 'isAuthenticated'
+    restricted:['sessionAuth'],
+    open:true
   },
-
 };

@@ -1,39 +1,21 @@
-"use strict";
-let bcrypt = require('bcrypt');
+/**
+ * User
+ *
+ * @module      :: Model
+ * @description :: This is the base user model
+ * @docs        :: http://waterlock.ninja/documentation
+ */
 
 module.exports = {
-  attributes: {
-    email: {
-      type: 'email',
-      required: true,
-      unique: true
-    },
-    password: {
-      type: 'string',
-      minLength: 6,
-      required: true
-    },
-      applications: {
-          collection: 'Application',
-          via: 'user'
-      },
-    toJSON: function() {
-      var obj = this.toObject();
-      delete obj.password;
-      return obj;
-    }
-  },
-  beforeCreate: function(user, cb) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        } else {
-          user.password = hash;
-          cb();
-        }
-      });
-    });
-  }
+
+  attributes: require('waterlock').models.user.attributes({
+    
+    /* e.g.
+    nickname: 'string'
+    */
+    
+  }),
+  
+  beforeCreate: require('waterlock').models.user.beforeCreate,
+  beforeUpdate: require('waterlock').models.user.beforeUpdate
 };

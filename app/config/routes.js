@@ -1,10 +1,11 @@
 module.exports.routes = {
   '/': {
-    view: 'homepage'
+    view: 'static/index'
   },
 
   'get /login': {
-    view: 'login'
+    view: 'login',
+    message:''
   },
 
   'post /login': 'AuthController.login',
@@ -15,3 +16,4 @@ module.exports.routes = {
     view: 'signup'
   }
 };
+
