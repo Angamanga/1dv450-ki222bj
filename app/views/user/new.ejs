@@ -1,14 +1,11 @@
 <form action="/user/create" method="post" class="form-signin">
   <h2 class="form-signin-heading">Create an account</h2>
-  <%
-  var flash = _.clone(req.flash('err'));
-  if (flash.length > 0) { //Check for error existence
-    console.log(flash);
-  %>
+
+  <% if(flash && flash.err) { %>
   <ul class="alert alert-success">
-    <% Object.keys(flash).forEach(function(err){%>
-    <li><%- JSON.stringify(flash[err]) %></li>
-    <% }); %>
+    <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+    <% }) %>
   </ul>
   <% } %>
 
