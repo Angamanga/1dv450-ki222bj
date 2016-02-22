@@ -59,7 +59,7 @@ edit(req, res, next){
         if(err) return next(err);
       });
       res.redirect('/user');
-    })
+    });
   }
 }
 
