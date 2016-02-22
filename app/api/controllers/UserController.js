@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
 'new'(req,res){
   res.view();
@@ -47,6 +49,17 @@ edit(req, res, next){
       }
       res.redirect('/user/show/' + req.params['id']);
     });
+  },
+  destroy(req,res,next){
+    User.findOne({id:req.params['id']},(err,user)=>{
+      if(err) return next(err);
+      if(!user) return next('User doesn\'t exist.');
+
+      User.destroy({id:req.params['id']}, (err)=>{
+        if(err) return next(err);
+      });
+      res.redirect('/user');
+    })
   }
 }
 
