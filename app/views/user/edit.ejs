@@ -2,6 +2,15 @@
   <h2>Hey, you are now editing a user ...</h2>
   <input value="<%= user.name %>" name="name" type="text" class="form-control" />
   <input value="<%= user.email %>" name="email" type="email" class="form-control" />
+  <% if(session.authenticated && session.User.admin){ %>
+  <% if(user.admin){ %>
+  <input type="hidden" name="admin" value="unchecked">
+  <label class="checkbox"><input type="checkbox" name="admin" checked>Admin</label>
+  <% } else { %>
+    <input type="hidden" name="admin" name="admin" unchecked>
+  <label class="checkbox"><input type="checkbox" name="admin"> Admin </label>
+  <% } %>
+  <% } %>
   <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block" />
   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>

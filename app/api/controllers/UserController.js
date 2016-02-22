@@ -10,6 +10,8 @@ module.exports = {
         req.session.flash = {'err':err};
         return res.redirect('/user/new');
       }
+      req.session.authenticated = true;
+      req.session.User = user;
       res.redirect('/user/show/' + user.id);
     });
   },
@@ -36,7 +38,6 @@ edit(req, res, next){
     console.log(user);
     if(err) return next(err);
     if(!user) return next();
-
     res.view({
       user:user
     });
@@ -45,9 +46,9 @@ edit(req, res, next){
   update(req,res,next){
     User.update({id:req.params['id']}, req.params.all(), (err)=>{
       if(err){
-        return res.redirect('/user/edit/'+req.params['id']);
+        return res.redirect('/user/edit/'+req.param('id'));
       }
-      res.redirect('/user/show/' + req.params['id']);
+      res.redirect('/user/show/' + req.param('id'));
     });
   },
   destroy(req,res,next){
