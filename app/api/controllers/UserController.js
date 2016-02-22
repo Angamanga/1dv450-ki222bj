@@ -3,16 +3,50 @@ module.exports = {
   res.view();
 },
   create(req,res,next){
-    User.create(req.params.all(), function userCreated(err,user){
-      if (req.param("password") != req.param("confirmation")){
-        return next("Passwords are not matching");
-      }
+    User.create(req.params.all(), (err,user)=>{
       if(err){
         req.session.flash = {'err':err};
         return res.redirect('/user/new');
       }
-      return res.json(user);
-    })
+      res.redirect('/user/show/' + user.id);
+    });
+  },
+  show(req,res,next){
+    User.findOne({id:req.params['id']},(err, user)=>{
+      console.log(user);
+    if(err) return next(err);
+      if(!user) return next();
+      res.view({
+      user:user
+      });
+    });
+  },
+  index(req, res, next){
+    User.find({},(err,users)=>{
+    if(err) return next(err);
+    res.view({
+      users:users
+    });
+  });
+},
+edit(req, res, next){
+  User.findOne({id:req.params['id']},(err, user)=>{
+    console.log(user);
+    if(err) return next(err);
+    if(!user) return next();
+
+    res.view({
+      user:user
+    });
+  });
+},
+  update(req,res,next){
+    User.update({id:req.params['id']}, req.params.all(), (err)=>{
+      if(err){
+        return res.redirect('/user/edit/'+req.params['id']);
+      }
+      res.redirect('/user/show/' + req.params['id']);
+    });
   }
-};
+}
 
