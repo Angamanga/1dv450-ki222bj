@@ -5,7 +5,14 @@ module.exports = {
   res.view();
 },
   create(req,res,next){
-    User.create(req.params.all(), (err,user)=>{
+    let userObj = {
+        name:req.param('name'),
+        email:req.param('email'),
+        password:req.param('password'),
+        confirmation:req.param('confirmation')
+      };
+
+    User.create(userObj, (err,user)=>{
       if(err){
         req.session.flash = {'err':err};
         return res.redirect('/user/new');
@@ -44,7 +51,21 @@ edit(req, res, next){
   });
 },
   update(req,res,next){
-    User.update({id:req.params['id']}, req.params.all(), (err)=>{
+    let userObj = {};
+    if(req.session.User.admin){
+      userObj = {
+        name:req.param('name'),
+        email:req.param('email'),
+        admin:req.param('admin')
+      };
+    }
+  else{
+    userObj = {
+      name: req.param('name'),
+      email: req.param('email'),
+    };
+    }
+   User.update({id:req.params['id']}, userObj, (err)=>{
       if(err){
         return res.redirect('/user/edit/'+req.param('id'));
       }

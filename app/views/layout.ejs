@@ -40,7 +40,9 @@
   <div class="navbar navbar-fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/api">Api</a>
     <div class="navbar-collapse collapse">
+    <% if(req.path === '/api'){%>
       <ul class="nav navbar-nav">
         <% if(session.authenticated){ %>
         <li class="active"><a href="/user/show/<%= session.User.id %>"><%= session.User.name %></a></li>
@@ -66,6 +68,7 @@
             </div>
         </form>
       <% } %>
+      <% }%>
     </div>
   </div>
 </div>
@@ -104,7 +107,7 @@
     -->
 
     <!--TEMPLATES-->
-    
+
     <!--TEMPLATES END-->
 
 
