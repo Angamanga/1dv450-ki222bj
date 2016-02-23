@@ -6,6 +6,7 @@
     <% } else { %>
     User
     <% } %></p>
+
   <a class="btn btn-sm btn-primary" href="/user/edit/<%= user.id %>" >Edit user</a>
   <button class="btn btn-sm btn-success" id="register">Register a new app</button>
   <form action="/application/create" method="post" class="hide" id="regform">
@@ -16,16 +17,16 @@
   </form>
 </div>
 <div class="container">
-  <% if(user.applications.length > 0){%>
-  <h3>Applications</h3>
+  <h3>Your applications</h3>
   <table class="table">
     <tr>
       <th>ID</th>
       <th>Name</th>
       <th>Description</th>
       <th>ApiKey</th>
-      <th>Administer</th>
+      <th></th>
     </tr>
+  <% if(user.applications.length > 0){%>
   <% user.applications.forEach((application)=>{%>
   <tr data-id="<%= application.userId %>" data-model="user">
     <td><%=application.userId %></td>
@@ -50,16 +51,19 @@
         </td>
     <% } else { %>
     <td><a href="/application/edit/<%= application.id %>" class="btn btn-sm btn-warning">Edit</a> </td>
-    <td><form action="/user/destroy/<%= user.id %>" method="POST">
+    <td><form action="/application/destroy/<%= application.id %>" method="POST">
         <input type="hidden" name="method" value="delete"/>
         <input type="hidden" name="_csrf" value="<%= _csrf %>" />
         <input type="submit" class="btn btn-sm btn-danger" value="Delete" />
         <% } %>
       </form>
     </td>
-  </tr>
+
   <% }) %>
-  <% } %>
+  <% } else { %>
+    <td>You have no registered applications... register one above and get your api-key!</td>
+    <%}%>
+  </tr>
   </table>
 </div>
 

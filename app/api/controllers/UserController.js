@@ -82,9 +82,6 @@ edit(req, res, next){
       });
       res.redirect('/user');
     });
-  },
-  showRegForm(){
-    console.log('regform');
   }
 }
 

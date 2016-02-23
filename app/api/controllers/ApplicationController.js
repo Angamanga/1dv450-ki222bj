@@ -34,6 +34,19 @@ module.exports = {
       res.redirect('/user/show/'+req.session.User.id);
     });
   },
+  destroy(req,res,next){
+
+    Application.findOne({id:req.params['id']},(err,application)=>{
+      if(err) return next(err);
+      if(!application) return next('Application doesn\'t exist.');
+
+      Application.destroy({id:req.params['id']}, (err)=>{
+        if(err) return next(err);
+      });
+      console.log(req.session.User.id);
+      res.redirect('/user/show/' + req.session.User.id);
+    });
+  },
   cancel(req,res,next){
     req.session.appId=undefined;
     res.redirect('/user/show/' + req.session.User.id);
