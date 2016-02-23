@@ -20,7 +20,6 @@ module.exports = {
     });
   },
   edit(req,res,next){
-    console.log(req);
     req.session.appId = req.params['id'];
     res.redirect('/user/show/'+req.session.User.id);
   },
@@ -43,7 +42,6 @@ module.exports = {
       Application.destroy({id:req.params['id']}, (err)=>{
         if(err) return next(err);
       });
-      console.log(req.session.User.id);
       res.redirect('/user/show/' + req.session.User.id);
     });
   },

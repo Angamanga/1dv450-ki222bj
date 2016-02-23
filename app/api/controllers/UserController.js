@@ -26,7 +26,6 @@ module.exports = {
     User.findOne({id:req.params['id']}).populate('applications').exec((err, user)=>{
     if(err) return next(err);
       if(!user) return next();
-      console.log(user);
       res.view({
       user:user
       });
@@ -73,7 +72,15 @@ edit(req, res, next){
     });
   },
   destroy(req,res,next){
-    User.findOne({id:req.params['id']},(err,user)=>{
+    Application.find({userId:req.params['id']}, function(err,applications){
+      applications.forEach((app)=>{
+        Application.destroy({id:app.id},(err)=>{
+          if(err) return next(err);
+        });
+      });
+    });
+
+      User.findOne({id:req.params['id']},(err,user)=>{
       if(err) return next(err);
       if(!user) return next('User doesn\'t exist.');
 
