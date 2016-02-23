@@ -1,10 +1,20 @@
 <div class="container">
   <h1>Name: <%= user.name %></h1>
   <h3>Email: <%= user.email %></h3>
-  <h3>Role: <% if(user.admin){%>
+  <p>Role: <% if(user.admin){%>
     Admin
     <% } else { %>
     User
-    <% } %></h3>
+    <% } %></p>
   <a class="btn btn-medium btn-primary" href="/user/edit/<%= user.id %>" >Edit</a>
+
+  <button class="btn btn-default btn-primary" id="register">Register your app</button>
+
+  <form action="/application/create" method="post" class="form-signin">
+    <h2 class="form-signin-heading">Add an application to get an api-key</h2>
+    <input type="text" class="form-control" placeholder="Application name" name="name">
+    <textarea class="form-control" placeholder="Description" name="description"cols=48 rows=4></textarea>
+    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Add your application"/>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  </form>
 </div>

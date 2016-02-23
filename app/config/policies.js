@@ -33,6 +33,7 @@ module.exports.policies = {
       'show':'userCanSeeProfile',
       'edit':'userCanSeeProfile',
       'update':'userCanSeeProfile',
+      'showRegForm':'userCanSeeProfile',
       '*':'admin'
   }
 

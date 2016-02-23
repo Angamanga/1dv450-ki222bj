@@ -19,6 +19,10 @@ module.exports = {
       type:'boolean',
       defaultsTo:false
     },
+    applications: {
+      collection: 'application',
+      via:'userId'
+    },
     toJSON(){
       let obj = this.toObject();
       delete obj.password;
@@ -29,7 +33,6 @@ module.exports = {
     }
   },
   beforeValidation(values,next){
-    console.log(values);
     if(typeof values.admin !== 'undefined'){
       if(values.admin === 'unchecked'){
         values.admin = false;

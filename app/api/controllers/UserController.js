@@ -23,10 +23,10 @@ module.exports = {
     });
   },
   show(req,res,next){
-    User.findOne({id:req.params['id']},(err, user)=>{
-      console.log(user);
+    User.findOne({id:req.params['id']}).populate('applications').exec((err, user)=>{
     if(err) return next(err);
       if(!user) return next();
+      console.log(user);
       res.view({
       user:user
       });
@@ -82,6 +82,9 @@ edit(req, res, next){
       });
       res.redirect('/user');
     });
+  },
+  showRegForm(){
+    console.log('regform');
   }
 }
 
