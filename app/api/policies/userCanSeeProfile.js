@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function(req,res,ok){
-  let sessionUserMatchesId = req.session.User.id === req.param('id');
+  let sessionUserMatchesId = (req.session.User.id === req.param('id') || req.session.appId === req.param('id'));
   let isAdmin = req.session.User.admin;
 
   if(!(sessionUserMatchesId || isAdmin)){

@@ -25,3 +25,12 @@ body{
 .form-signin .btn{
   margin-top: 5px;
 }
+
+#regform{
+  padding-top:10px;
+
+}
+.reg{
+  width:33%;
+  display:inline-block;
+}
