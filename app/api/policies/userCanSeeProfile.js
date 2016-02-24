@@ -1,6 +1,14 @@
 "use strict";
 module.exports = function(req,res,ok){
-  let sessionUserMatchesId = (req.session.User.id === req.param('id') || req.session.appId === req.param('id'));
+  let applicationIdMatchesUserId = false;
+if(req.session.User.applications){
+  req.session.User.applications.forEach((application)=>{
+    if(application.id === req.param('id')){
+      applicationIdMatchesUserId = true;
+    }
+  });
+}
+  let sessionUserMatchesId = (req.session.User.id === req.param('id') || applicationIdMatchesUserId);
   let isAdmin = req.session.User.admin;
 
   if(!(sessionUserMatchesId || isAdmin)){

@@ -15,13 +15,20 @@ module.exports = {
     }
     Application.create(appObj, (err,app)=>{
       if(!err){
-        res.redirect('/user/show/' + app.userId);
+        User.findOne({id:app.userId}).populate('applications').exec((err, user)=>{
+          if(err) return next(err);
+          if(!user) return next();
+          req.session.User = user;
+          res.redirect('/user/show/' + app.userId);
+
+        });
       }
     });
   },
   edit(req,res,next){
-    req.session.appId = req.params['id'];
-    res.redirect('/user/show/'+req.session.User.id);
+    req.session.editId = req.params['id'];
+    console.log(req.session.editId);
+    res.redirect('/user/show/'+req.session.showId);
   },
   update(req,res,next){
     let appObj = {
@@ -29,25 +36,26 @@ module.exports = {
       description:req.param('description')
     };
     Application.update({id:req.params['id']},appObj,(err)=>{
-        req.session.appId=undefined;
-      res.redirect('/user/show/'+req.session.User.id);
+        req.session.editId=undefined;
+      res.redirect('/user/show/'+req.session.showId);
     });
   },
   destroy(req,res,next){
+    req.session.editId = req.params['id'];
 
-    Application.findOne({id:req.params['id']},(err,application)=>{
+    Application.findOne({id:req.session.editId},(err,application)=>{
       if(err) return next(err);
       if(!application) return next('Application doesn\'t exist.');
 
       Application.destroy({id:req.params['id']}, (err)=>{
         if(err) return next(err);
       });
-      res.redirect('/user/show/' + req.session.User.id);
+      res.redirect('/user/show/' + req.session.showId);
     });
   },
   cancel(req,res,next){
     req.session.appId=undefined;
-    res.redirect('/user/show/' + req.session.User.id);
+    res.redirect('/user/show/' + req.session.showId);
   }
   };
 

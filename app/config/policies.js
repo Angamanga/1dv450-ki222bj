@@ -33,8 +33,16 @@ module.exports.policies = {
       'show':'userCanSeeProfile',
       'edit':'userCanSeeProfile',
       'update':'userCanSeeProfile',
-      'showRegForm':'userCanSeeProfile',
       '*':'admin'
+  },
+  application:{
+    'create':'userCanSeeProfile',
+    'show':'userCanSeeProfile',
+    'edit':'userCanSeeProfile',
+    'update':'userCanSeeProfile',
+    'destroy':'userCanSeeProfile',
+    'cancel':'userCanSeeProfile',
+    '*':'admin'
   }
 
   /***************************************************************************

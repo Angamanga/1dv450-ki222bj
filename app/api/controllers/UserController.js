@@ -23,9 +23,12 @@ module.exports = {
     });
   },
   show(req,res,next){
-    User.findOne({id:req.params['id']}).populate('applications').exec((err, user)=>{
+    req.session.showId = req.params['id'];
+    User.findOne({id:req.session.showId}).populate('applications').exec((err, user)=>{
     if(err) return next(err);
       if(!user) return next();
+      req.session.User = user;
+      console.log(req.session.User);
       res.view({
       user:user
       });

@@ -1,3 +1,4 @@
+<!--Template for admin-panel-->
 <div class="container">
   <h3>Users</h3>
   <table class="table">
@@ -7,28 +8,27 @@
       <th>Email</th>
       <th>Role</th>
     </tr>
-
-
-    <% users.forEach((user)=>{%>
+    <!--looping through users and render information-->
+    <% users.forEach((user) =>{ %>
     <tr data-id="<%= user.id %>" data-model="user">
-      <td><%=user.id %></td>
-      <td><%=user.name %></td>
-      <td><%=user.email %></td>
-      <% if(user.admin){%>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <% if(user.admin){ %>
       <td>Admin</td>
       <% } else { %>
       <td>User</td>
       <% } %>
-
-      <td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show user and applications</a> </td>
-      <td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a> </td>
-      <td><form action="/user/destroy/<%= user.id %>" method="POST">
+      <td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show user and applications</a></td>
+      <td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+      <td>
+        <form action="/user/destroy/<%= user.id %>" method="POST">
           <input type="hidden" name="method" value="delete"/>
-          <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-          <input type="submit" class="btn btn-sm btn-danger" value="Delete" />
-       </form>
-        </td>
+          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+          <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+        </form>
+      </td>
     </tr>
-<% }) %>
+    <% }) %>
   </table>
 </div>

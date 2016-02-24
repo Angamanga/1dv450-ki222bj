@@ -1,19 +1,23 @@
+<!--Template for showing user and adding applications to a user-->
 <div class="container">
   <h1>Name: <%= user.name %></h1>
   <h3>Email: <%= user.email %></h3>
-  <p>Role: <% if(user.admin){%>
+  <p>Role:
+    <% if(user.admin){ %>
     Admin
     <% } else { %>
     User
-    <% } %></p>
+    <% } %>
+  </p>
 
-  <a class="btn btn-sm btn-primary" href="/user/edit/<%= user.id %>" >Edit user</a>
+  <a class="btn btn-sm btn-primary" href="/user/edit/<%= user.id %>">Edit user</a>
   <button class="btn btn-sm btn-success" id="register">Register a new app</button>
+ <!--Showing this form if user clicks on button Register a new app-->
   <form action="/application/create" method="post" class="hide" id="regform">
     <input type="text" class="form-control reg" placeholder="Application name" name="name">
     <input type="text" class="form-control reg" placeholder="Description" name="description">
     <input type="submit" class="btn btn-sm btn-success" value="Add your application"/>
-    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
   </form>
 </div>
 <div class="container">
@@ -26,45 +30,47 @@
       <th>ApiKey</th>
       <th></th>
     </tr>
-  <% if(user.applications.length > 0){%>
-  <% user.applications.forEach((application)=>{%>
-  <tr data-id="<%= application.userId %>" data-model="user">
-    <td><%=application.userId %></td>
-      <% if(session.appId === application.id){%>
+    <!--checking if user has applications registered or not-->
+    <% if(user.applications.length > 0){ %>
+    <!--looping through and renders applications for this user-->
+    <% user.applications.forEach((application)=>{ %>
+    <tr data-id="<%= application.userId %>" data-model="user">
+      <td><%= application.id %></td>
+      <!--checking if application is in edit-mode or not-->
+      <% if(session.editId === application.id){%>
       <form action="/application/update/<%= application.id %>" method="post">
         <td>
-          <input type="text" class="form-control" value="<%=application.name%>" name="name">
+          <input type="text" class="form-control" value="<%= application.name %>" name="name">
         </td>
-       <td>   <input type="text" class="form-control" value="<%= application.description %>" name="description">
-       </td>
-      <% } else { %>
-  <td>  <%= application.name %> </td>
-    <td><%= application.description %></td>
+        <td><input type="text" class="form-control" value="<%= application.description %>" name="description">
+        </td>
+        <% } else { %>
+        <td>  <%= application.name %> </td>
+        <td><%= application.description %></td>
         <% } %>
-
-        <td><%=application.apiKey %></td>
-        <% if(session.appId === application.id){%>
+        <td><%= application.apiKey %></td>
+        <!--checking if application is in edit-mode or not-->
+        <% if(session.editId === application.id){ %>
         <td><input type="submit" class="btn btn-sm btn-success" value="Update your application info"/>
-          <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
         <td><a href="/application/cancel/" class="btn btn-sm btn-warning">Cancel</a>
-
         </td>
-    <% } else { %>
-    <td><a href="/application/edit/<%= application.id %>" class="btn btn-sm btn-warning">Edit</a> </td>
-    <td><form action="/application/destroy/<%= application.id %>" method="POST">
-        <input type="hidden" name="method" value="delete"/>
-        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-        <input type="submit" class="btn btn-sm btn-danger" value="Delete" />
+        <% } else { %>
+        <td><a href="/application/edit/<%= application.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+        <td>
+          <form action="/application/destroy/<%= application.id %>" method="POST">
+            <input type="hidden" name="method" value="delete"/>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+            <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+            <% } %>
+          </form>
+        </td>
+        <% }) %>
+        <% } else { %>
+        <td>You have no registered applications... register one above and get your api-key!</td>
         <% } %>
-      </form>
-    </td>
-
-  <% }) %>
-  <% } else { %>
-    <td>You have no registered applications... register one above and get your api-key!</td>
-    <%}%>
-  </tr>
+        </form>
+    </tr>
   </table>
 </div>
-
 </div>

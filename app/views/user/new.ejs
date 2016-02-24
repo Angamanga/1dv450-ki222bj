@@ -1,6 +1,7 @@
+<!--Template for registering a new user-->
 <form action="/user/create" method="post" class="form-signin">
   <h2 class="form-signin-heading">Create an account</h2>
-
+  <!--Showing flashmessage if something is missing/wrong in form-->
   <% if(flash && flash.err) { %>
   <ul class="alert alert-success">
     <% Object.keys(flash.err).forEach(function(error) { %>
@@ -8,13 +9,11 @@
     <% }) %>
   </ul>
   <% } %>
-
   <input type="text" class="form-control" placeholder="Your name" name="name">
   <input type="text" class="form-control" placeholder="Your email" name="email">
   <input type="password" class="form-control" placeholder="Choose a password" name="password">
   <input type="password" class="form-control" placeholder="Repeat your password" name="confirmation">
   <div></div>
   <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create an Account"/>
-  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-
+  <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
 </form>
