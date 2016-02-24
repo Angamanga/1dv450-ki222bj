@@ -1,10 +1,10 @@
 "use strict";
-
+//model for User
 module.exports = {
   schema: true,
   attributes: {
-    name:{
-      type:'string'
+    name: {
+      type: 'string'
     },
     email: {
       type: 'string',
@@ -15,13 +15,13 @@ module.exports = {
     encryptedPassword: {
       type: 'string'
     },
-    admin:{
-      type:'boolean',
-      defaultsTo:false
+    admin: {
+      type: 'boolean',
+      defaultsTo: false
     },
     applications: {
       collection: 'application',
-      via:'userId'
+      via: 'userId'
     },
     toJSON(){
       let obj = this.toObject();
@@ -32,27 +32,28 @@ module.exports = {
       return obj;
     }
   },
-  beforeValidation(values,next){
-    if(typeof values.admin !== 'undefined'){
-      if(values.admin === 'unchecked'){
+  beforeValidation(values, next){
+    if (typeof values.admin !== 'undefined') {
+      if (values.admin === 'unchecked') {
         values.admin = false;
       }
-      else if( values.admin[1] === 'on'){
+      else if (values.admin[1] === 'on') {
         values.admin = true;
       }
     }
     next();
   },
-  beforeCreate(values,next){
-    if(!values.password || values.password !== values.confirmation){
-      return(next({err:['Passwords does not match password confirmation']}));
+  beforeCreate(values, next){
+    //checking and hashing password
+    if (!values.password || values.password !== values.confirmation) {
+      return (next({err: ['Passwords does not match password confirmation']}));
     }
-    require('bcrypt').hash(values.password, 10, (err, encryptedPassword)=>{
-      if(err) return next(err);
+    require('bcrypt').hash(values.password, 10, (err, encryptedPassword)=> {
+      if (err) return next(err);
       values.encryptedPassword = encryptedPassword;
       next();
     });
-    }
+  }
 };
 
 

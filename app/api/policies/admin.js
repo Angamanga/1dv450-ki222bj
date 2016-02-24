@@ -1,10 +1,11 @@
 "use strict";
-module.exports = function(req, res, next) {
+//setting admin-access
+module.exports = function (req, res, next) {
   if (req.session.User && req.session.User.admin) {
     return next();
   }
-  else{
-    let requireLoginError = {name:'requireLogin', message:'You must be an admin.'};
+  else {
+    let requireLoginError = {name: 'requireLogin', message: 'You must be an admin.'};
     req.session.flash = {
       err: requireLoginError
     }
