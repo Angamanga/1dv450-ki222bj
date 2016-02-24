@@ -8,21 +8,19 @@ module.exports = {
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < 10; i++) {
       apiKey += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    ;
+    };
     appObj = {
       name: req.param('name'),
       description: req.param('description'),
-      userId: req.session.User.id,
+      userId: req.session.showId,
       apiKey
     }
     //adding application and api-key to database
     Application.create(appObj, (err, app)=> {
       if (!err) {
-        User.findOne({id: app.userId}).populate('applications').exec((err, user)=> {
+        User.findOne({id: app.userId}).populate('applications').exec((err, user)=>{
           if (err) return next(err);
           if (!user) return next();
-          req.session.User = user;
           res.redirect('/user/show/' + app.userId);
         });
       }
@@ -60,7 +58,7 @@ module.exports = {
   },
   cancel(req, res, next){
     //canceling edit-mode
-    req.session.appId = undefined;
+    req.session.editId = undefined;
     res.redirect('/user/show/' + req.session.showId);
   }
 };

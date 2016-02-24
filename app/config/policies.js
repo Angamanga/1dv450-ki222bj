@@ -12,12 +12,12 @@ module.exports.policies = {
     '*': 'admin'
   },
   application: {
-    'create': 'userCanSeeProfile',
-    'show': 'userCanSeeProfile',
-    'edit': 'userCanSeeProfile',
-    'update': 'userCanSeeProfile',
-    'destroy': 'userCanSeeProfile',
-    'cancel': 'userCanSeeProfile',
+    'create': 'applications',
+    'show': 'applications',
+    'edit': 'applications',
+    'update': 'applications',
+    'destroy': 'applications',
+    'cancel': 'applications',
     '*': 'admin'
   }
 };

@@ -30,7 +30,6 @@ module.exports = {
     User.findOne({id: req.session.showId}).populate('applications').exec((err, user)=> {
       if (err) return next(err);
       if (!user) return next();
-      req.session.User = user;
       res.view({
         user: user
       });
