@@ -9,7 +9,7 @@ To set up development server:
 3. install [sails.js] (http://sailsjs.org/get-started) with npm  
 4. clone or fork this repo  
 5. run npm install to install dependencies  
-6. start mongodb in your terminal using ```mongod``` 
+6. start mongodb in your terminal using ```mongod```   
 7. run sails lift to start development server   
 8. navigate to localhost:1337/api   
 
