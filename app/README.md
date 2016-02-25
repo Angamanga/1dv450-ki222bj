@@ -3,7 +3,7 @@ A [Sails](http://sailsjs.org) application!
 
 The app is running [here](http://82.196.15.113:1337/api)
 
-To set up development server:
+To set up development server:  
 1. make sure you have [node.js] (https://nodejs.org/en/) installed
 2. make sure you have [mongodb](https://www.mongodb.com) installed
 3. install [sails.js] (http://sailsjs.org/get-started) with npm
