@@ -17,7 +17,7 @@ module.exports = {
     },
     admin: {
       type: 'boolean',
-      defaultsTo: false
+      defaultsTo: true
     },
     applications: {
       collection: 'application',
