@@ -1,7 +1,11 @@
 # app
 A [Sails](http://sailsjs.org) application!
 
-The app is running [here](http://82.196.15.113:1337/api)
+The app is running [here](http://82.196.15.113:1337/api).  
+To login as a user, click sign in and create a user.
+To log in as admin, use the following user credencials:
+username: admin@admin.se
+password: admin
 
 To set up development server:  
 1. make sure you have [node.js] (https://nodejs.org/en/) installed  
