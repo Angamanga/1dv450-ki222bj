@@ -9,6 +9,9 @@ module.exports.routes = {
   '/user/new':{
     controller: 'UserController',
     action: 'new'
-  }
-
+  },
+  '/cafeinfo':{
+    controller:'CafeinfoController',
+    action:'show'
+}
 };

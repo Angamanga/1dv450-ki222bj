@@ -47,8 +47,10 @@
 * Enabled CSRF protection for your site?                                    *
 *                                                                           *
 ****************************************************************************/
-
- module.exports.csrf = true;
+csrf = {
+  routesDisabled: '/cafeinfo'
+}
+ module.exports = csrf;
 
 /****************************************************************************
 *                                                                           *

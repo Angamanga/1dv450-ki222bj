@@ -19,5 +19,11 @@ module.exports.policies = {
     'destroy': 'applications',
     'cancel': 'applications',
     '*': 'admin'
+  },
+  cafeinfo:{
+    'create':'apiKey',
+    'show':'apiKey'
+    //'edit':'apiKey',
+    //'destroy':'apiKey'
   }
 };
