@@ -21,7 +21,7 @@ module.exports.policies = {
     '*': 'admin'
   },
   cafeinfo:{
-    'create':'apiKey',
+    'create':['apiAuth','apiKey'],
     'show':'apiKey'
     //'edit':'apiKey',
     //'destroy':'apiKey'

@@ -30,6 +30,9 @@ module.exports = {
         return res.send(['200'], cafe);
       }
     });
+  },
+  'badRequest'(req,res,next){
+    return res.badRequest('Invalid request');
   }
 };
 

@@ -10,8 +10,15 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'new'
   },
-  '/cafeinfo':{
+  'get /cafeinfo':{
     controller:'CafeinfoController',
     action:'show'
-}
+},
+  'get /cafeinfo/create':{
+    controller:'CafeinfoController',
+    action:'badRequest'
+  },
+  'post /cafeinfo/create':{
+    controller:'CafeinfoController'
+  }
 };
