@@ -1,7 +1,7 @@
 module.exports = {
   attributes: {
-    latitude: {
-      type: 'string',
+    position: {
+      type: 'array',
       required: true
     },
     longitude: {

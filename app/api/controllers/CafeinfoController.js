@@ -23,7 +23,8 @@ module.exports = {
     });
   },
   'show'(req,res,next){
-    let query = {};
+    let query = {},
+      distance;
 
     //todo: refactor 27-32 in own function
     req.param('name') ? query.name = (req.param('name')) : null;
@@ -34,6 +35,8 @@ module.exports = {
     req.param('wifi') ? query.wifi = req.param('wifi') : null;
     req.param('latitude') ? query.latitude = req.param('latitude') : null;
     req.param('longitude') ? query.longitude = req.param('longitude') : null;
+    req.param('distance') ? distance = req.param('distance') : 500;
+  //https://github.com/balderdashy/sails-mongo/issues/46
 
     Cafeinfo.find(query).exec((err,cafe)=>{
       if(err){
