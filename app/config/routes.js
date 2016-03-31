@@ -19,6 +19,7 @@ module.exports.routes = {
     action:'badRequest'
   },
   'post /cafeinfo/create':{
-    controller:'CafeinfoController'
+    controller:'CafeinfoController',
+    action:'create'
   }
 };

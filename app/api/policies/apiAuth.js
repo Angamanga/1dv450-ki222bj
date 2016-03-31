@@ -1,4 +1,7 @@
-"use strict"
+"use strict";
+
+//TODO: refactor auth-functions
+const bcrypt = require('bcrypt');
 
 module.exports = (req, res, next)=>{
   console.log('hej'+req.param('email'));
@@ -13,7 +16,7 @@ module.exports = (req, res, next)=>{
       return;
     }
     if(!user){
-      res.forbidden('no user with ' + res.param('email') + 'was found');
+      res.forbidden('no user with ' + req.param('email') + ' was found');
     return;
     }
     bcrypt.compare(req.param('password'), user.encryptedPassword,(err,valid)=>{
@@ -26,8 +29,6 @@ module.exports = (req, res, next)=>{
         return;
       }
       next();
-    })
-
-
+    });
   })
 }

@@ -1,4 +1,5 @@
 "use strict";
+const _ = require('lodash');
 
 module.exports = {
   'create'(req, res, next){
@@ -22,12 +23,24 @@ module.exports = {
     });
   },
   'show'(req,res,next){
-    Cafeinfo.findOne({id:req.id}).exec((err,cafe)=>{
+    let query = {};
+
+    //todo: refactor 27-32 in own function
+    req.param('name') ? query.name = (req.param('name')) : null;
+    req.param('streetAddress') ? query.streetAddress = req.param('streetAddress') : null;
+    req.param('postalCode') ? query.postalCode = req.param('postalCode') : null;
+    req.param('city') ? query.city = req.param('city') : null;
+    req.param('electricity') ? query.electricity = req.param('electricity') : null;
+    req.param('wifi') ? query.wifi = req.param('wifi') : null;
+    req.param('latitude') ? query.latitude = req.param('latitude') : null;
+    req.param('longitude') ? query.longitude = req.param('longitude') : null;
+
+    Cafeinfo.find(query).exec((err,cafe)=>{
       if(err){
         return res.badRequest('no cafe with that id was found');
       }
       else{
-        return res.send(['200'], cafe);
+        return res.send(['200'], _.orderBy(cafe, ['createdAt'], ['desc']));
       }
     });
   },

@@ -1,7 +1,8 @@
 "use strict";
 //controller for logging in and out user
 const bcrypt = require('bcrypt');
-
+//todo: refactor auth-functions
+//TODO: exchange function() to ()=>{}
 module.exports = {
   'new'(req, res){
     res.view('session/new');
