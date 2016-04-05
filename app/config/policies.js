@@ -22,7 +22,8 @@ module.exports.policies = {
   },
   cafeinfo:{
     'create':['apiAuth','apiKey'],
-    'show':'apiKey'
+    'show':'apiKey',
+    'findNear':'apiKey'
     //'edit':'apiKey',
     //'destroy':'apiKey'
   }

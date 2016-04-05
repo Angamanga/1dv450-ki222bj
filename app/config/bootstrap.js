@@ -10,8 +10,13 @@
  */
 
 module.exports.bootstrap = function(cb) {
+  sails.models.cafeinfo.native(function (err, collection) {
+    console.log("i bootstrap");
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+    collection.ensureIndex({ coordinates: '2dsphere' }, function () {
+      // It's very important to trigger this callback method when you are finished
+      // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+      cb();
+    });
+  });
 };

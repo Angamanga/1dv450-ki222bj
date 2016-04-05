@@ -21,5 +21,9 @@ module.exports.routes = {
   'post /cafeinfo/create':{
     controller:'CafeinfoController',
     action:'create'
+  },
+  'get /cafeinfo/near':{
+    controller:'CafeinfoController',
+    action:'findNear'
   }
 };

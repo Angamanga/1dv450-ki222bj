@@ -1,32 +1,42 @@
 "use strict";
-const _ = require('lodash');
-
 module.exports = {
   'create'(req, res, next){
-    let cafeObj = {};
-    cafeObj.latitude = req.param('latitude');
-    cafeObj.longitude = req.param('longitude');
-    cafeObj.name = req.param('name');
-    cafeObj.streetAddress = req.param('streetAddress');
-    cafeObj.postalCode = req.param('postalCode');
-    cafeObj.city = req.param('city');
-    cafeObj.electricity = req.param('electricity');
-    cafeObj.wifi = req.param('wifi');
+    let cafeObj = {},
+      errors = 'You make sure you entered:\n';
 
-    Cafeinfo.create(cafeObj,(err,obj)=>{
-      if(err){
+    //TODO: refactor below in own function
+    if (parseFloat(req.param('longitude')) && parseFloat(req.param('latitude'))) {
+      cafeObj.coordinates = [parseFloat(req.param('longitude')), parseFloat(req.param('latitude'))];
+    }
+    else {
+      errors += 'latitude and longitude\n';
+    }
+    req.param('name') ? cafeObj.name = req.param('name') : errors += 'name\n';
+    req.param('streetAddress') ? cafeObj.streetAddress = req.param('streetAddress') : errors += 'streetAddress\n';
+    req.param('postalCode') ? cafeObj.postalCode = req.param('postalCode') : errors += 'postalCode\n';
+    req.param('city') ? cafeObj.city = req.param('city') : errors += 'city\n';
+    req.param('electricity') ? cafeObj.electricity = req.param('electricity') : errors += 'electricity \n';
+    req.param('wifi') ? cafeObj.wifi = req.param('wifi') : errors += 'wifi';
+
+    if (errors.length > 27) {
+      return res.badRequest(errors);
+    }
+
+    Cafeinfo.create(cafeObj, (err, obj)=> {
+      if (err) {
         return res.forbidden(err);
       }
-      else{
+      else {
         return res.send(['200'], 'your cafe was added! The unique id is ' + obj.id);
       }
     });
   },
-  'show'(req,res,next){
+  'show'(req, res, next){
     let query = {},
-      distance;
+      location = {},
+      limit;
 
-    //todo: refactor 29-4 in own function
+    //todo: refactor below in own function
     req.param('id') ? query.id = req.param('id') : null;
     req.param('name') ? query.name = (req.param('name')) : null;
     req.param('streetAddress') ? query.streetAddress = req.param('streetAddress') : null;
@@ -34,42 +44,46 @@ module.exports = {
     req.param('city') ? query.city = req.param('city') : null;
     req.param('electricity') ? query.electricity = req.param('electricity') : null;
     req.param('wifi') ? query.wifi = req.param('wifi') : null;
-    req.param('latitude') ? query.latitude = req.param('latitude') : null;
-    req.param('longitude') ? query.longitude = req.param('longitude') : null;
-  //https://github.com/balderdashy/sails-mongo/issues/46
-    if(req.param('latitude')&&req.param('longitude')) {
-      //regex for lat/long!
-      let maxDistance = req.param('distance') ? req.param('distance') : 500;
-      query.coordinates = {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [
-              parseInt(req.param('longitude')),
-              parseInt(req.param('latitude'))
-            ]
-          },
-          $maxDistance: maxDistance
-        }
-      }
-    }
-    else if(req.param('latitude') || req.param('longitude')) {
-      return res.badRequest('you must enter both latitude and longitude');
-    }
+    req.param('limit') ? limit = req.param('limit') : null;
 
-    Cafeinfo.native((err,collection)=>{
-      collection.find(query).toArray((err,cafe)=>{
+    Cafeinfo.native((err, collection)=> {
+      collection.find(query).sort(-1).toArray((err, cafe)=> {
         console.log(err);
-        if(err){
-
-        return res.badRequest('no cafe with that id was found');
-      }
-      else{
-        return res.send(['200'], _.orderBy(cafe, ['createdAt'], ['desc']));
-      }
+        if (err) {
+          return res.negotiate(err);
+        }
+        else if (!cafe) {
+          return res.badRequest('no cafe with your search-criteria was found');
+        }
+        else {
+          return res.json(['200'],cafe);
+        }
+      });
     });
-  });},
-  'badRequest'(req,res,next){
+  },
+  'findNear'(req, res){
+    let query = {};
+    //https://github.com/balderdashy/sails-mongo/issues/46
+    if (req.param('latitude') && req.param('longitude')) {
+      //regex for lat/long!
+      query.lng = parseFloat(req.param('longitude'));
+      query.lat = parseFloat(req.param('latitude'));
+      query.maxDistance = parseFloat(req.param('distance')) || 500;
+      Cafeinfo.findNear(query, (err, results)=> {
+        if (err) {
+          return res.negotiate(err);
+        }
+        else if (results.length < 1) {
+          return res.send(['200'], 'no cafe with your search-criteria was found');
+        }
+        return res.json(['200'], results);
+      });
+    }
+    else {
+      return res.badRequest('you must enter latitude and longitude to make a query');
+    }
+  },
+  'badRequest'(req, res, next){
     return res.badRequest('Invalid request');
   }
 };
