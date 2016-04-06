@@ -3,7 +3,7 @@ module.exports.routes = {
   '/': {
     view: 'static/index'
   },
-  '/api':{
+  '/apikey':{
     view:'static/api'
   },
   '/user/new':{
@@ -14,16 +14,25 @@ module.exports.routes = {
     controller:'CafeinfoController',
     action:'show'
 },
-  'get /cafeinfo/create':{
-    controller:'CafeinfoController',
-    action:'badRequest'
+  'get /cafeinfo/:id':{
+    controller: 'CafeinfoController',
+    action: 'showOne'
   },
-  'post /cafeinfo/create':{
+  'post /cafeinfo':{
     controller:'CafeinfoController',
     action:'create'
   },
-  'get /cafeinfo/near':{
+  'put /cafeinfo':{
     controller:'CafeinfoController',
-    action:'findNear'
+    action:'create'
   }
+  //,
+  //'get /cafeinfo/near':{
+  //  controller:'CafeinfoController',
+  //  action:'findNear'
+  //},
+  //'get /cafeinfo/search':{
+  //  controller:'CafeinfoController',
+  //  action:'search'
+  //}
 };

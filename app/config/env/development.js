@@ -11,6 +11,7 @@
  */
 
 module.exports = {
+  HOMEPATH: 'localhost:1337'
 
   /***************************************************************************
    * Set the default database connection for models in the development       *

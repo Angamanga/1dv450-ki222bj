@@ -2,9 +2,18 @@
 
 //TODO: refactor auth-functions
 const bcrypt = require('bcrypt');
+const user1 = {
+  id:1,
+  username:'user1',
+  password:'user1password'
+};
+const user2 = {
+  id:2,
+  username:'user2',
+  password:'user2password'
+};
 
 module.exports = (req, res, next)=>{
-  console.log('hej'+req.param('email'));
   if(!req.param('email') || !req.param('password')) {
     //TODO: move strings to constant-file
     res.forbidden('You must enter both an email and a password');

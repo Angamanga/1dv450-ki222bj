@@ -22,9 +22,9 @@ module.exports.policies = {
   },
   cafeinfo:{
     'create':['apiAuth','apiKey'],
-    'show':'apiKey',
-    'findNear':'apiKey'
-    //'edit':'apiKey',
-    //'destroy':'apiKey'
+    'show':'apiKey'
+    //'findNear':'apiKey',
+    //'search:'apiKey',
+   // 'destroy':['apiAuth','apiKey']
   }
 };
