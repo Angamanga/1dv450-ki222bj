@@ -68,10 +68,7 @@ module.exports = {
       console.log(cafe);
       if (err) return res.negotiate(err);
       else if (!cafe) {
-        let resObj = {
-          err: 'no cafe with that ID was found'
-        }
-        return res.badRequest(resObj);
+        return res.badRequest({err: 'no cafe with that ID was found'});
       }
       else {
         let resObj = {
@@ -154,7 +151,16 @@ module.exports = {
             return res.badRequest('no cafe with your search-criteria was found');
           }
           else {
-            return res.json(['200'], cafe);
+            let cafeResult =[]
+            //extracting relevant information and creating a response-object
+            cafe.forEach(obj=>{
+              cafeResult.push({location:'http://' + sails.config.HOMEPATH + '/cafeinfo/' + obj.obj._id,cafe:obj.obj});
+            });
+            let resObj = {
+              message: 'cafe found',
+              cafe: cafeResult
+            }
+            return res.json(['200'], cafeResult);
           }
         }
           if(geoquery){
@@ -164,9 +170,8 @@ module.exports = {
               query:searchquery
             },(err,places)=>{
               //this is working!
-              console.log(places.results);
+              callback(err,places.results);
             });
-              //);
           }
         else{
             collection.find(searchquery).sort({createdAt: -1}).skip(offset).limit(limit).toArray(callback);
@@ -174,103 +179,3 @@ module.exports = {
       });
     }
 }
-
-
-//    collection.geoNear({
-//        type: 'Point',
-//        coordinates: [conditions.lng, conditions.lat]
-//      }, {
-//        limit: conditions.limit || 30,
-//        maxDistance: conditions.maxDistance,
-//        spherical: true
-//      },
-//      (err,places)=>{
-//        if(err) return callback(err);
-//        console.log(places)
-//        return callback(null, places.results);
-//      });
-//  });
-//}
-//
-//'show'(req, res, next){
-//  let query = {},
-//    location = {},
-//    limit,
-//    offset;
-//
-//  //todo: refactor below in own function
-//  req.param('id') ? query.id = req.param('id') : null;
-//  req.param('name') ? query.name = (req.param('name')) : null;
-//  req.param('streetAddress') ? query.streetAddress = req.param('streetAddress') : null;
-//  req.param('postalCode') ? query.postalCode = req.param('postalCode') : null;
-//  req.param('city') ? query.city = req.param('city') : null;
-//  req.param('electricity') ? query.electricity = req.param('electricity') : null;
-//  req.param('wifi') ? query.wifi = req.param('wifi') : null;
-//  limit = parseInt(req.param('limit')) ?  parseInt(req.param('limit')) : 30;
-//  offset = parseInt(req.param('offset')) ? parseInt(req.param('offset')) : 0;
-//
-//  Cafeinfo.native((err, collection)=> {
-//    let callback = (err, cafe)=> {
-//      if (err) {
-//        return res.negotiate(err);
-//      }
-//      else if (!cafe) {
-//        return res.badRequest('no cafe with your search-criteria was found');
-//      }
-//      else {
-//        return res.json(['200'], cafe);
-//      }
-//    }
-//    collection.find(query).sort({createdAt: -1}).skip(offset).limit(limit).toArray(callback);
-//
-//  });
-//},
-//'findNear'(req, res){
-//  let query = {};
-//  //https://github.com/balderdashy/sails-mongo/issues/46
-//  if (req.param('latitude') && req.param('longitude')) {
-//    //regex for lat/long!
-//    query.lng = parseFloat(req.param('longitude'));
-//    query.lat = parseFloat(req.param('latitude'));
-//    query.maxDistance = parseFloat(req.param('distance')) || 500;
-//    Cafeinfo.findNear(query, (err, results)=> {
-//      if (err) {
-//        return res.negotiate(err);
-//      }
-//      else if (results.length < 1) {
-//        return res.send(['200'], 'no cafe with your search-criteria was found');
-//      }
-//      return res.json(['200'], results);
-//    });
-//  }
-//  else {
-//    return res.badRequest('you must enter latitude and longitude to make a query');
-//  }
-//},
-//'search'(req,res){
-//  let searchObj = {
-//    $regex: req.param('search'),
-//    $options: 'igm'
-//  };
-//  let query = {
-//    $or: [{
-//      coordinates:searchObj,
-//      name:searchObj,
-//      streetAddress:searchObj,
-//      postalCode: searchObj,
-//      city:searchObj,
-//      electricity:searchObj,
-//      wifi: searchObj
-//    }]
-//  };
-//
-//  Cafeinfo.native((err, collection)=> {
-//    collection.find(query).sort({createdAt: -1}).toArray(function (err, result) {
-//      if (err) {
-//        res.send(err);
-//      } else {
-//        res.json(result);
-//      }
-//    });
-//  });
-//},
