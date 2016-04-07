@@ -163,7 +163,7 @@ module.exports = {
             cafeResult.push({location: 'http://' + sails.config.HOMEPATH + '/cafeinfo/' + obj._id, cafe: obj});
           });
 
-          if(cafeResult.lenth>0){
+          if(cafeResult.length>0){
           return res.json(['200'], {
             message: 'cafes found',
             cafes: cafeResult
