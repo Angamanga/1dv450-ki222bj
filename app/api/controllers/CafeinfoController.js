@@ -154,7 +154,7 @@ module.exports = {
           return res.negotiate(err);
         }
         else if (!cafe) {
-          return res.badRequest('no cafe with your search-criteria was found');
+          return res.badRequest({message:'no cafe with your search-criteria was found'});
         }
         else {
           let cafeResult = []
@@ -162,10 +162,16 @@ module.exports = {
           cafe.forEach(obj=> {
             cafeResult.push({location: 'http://' + sails.config.HOMEPATH + '/cafeinfo/' + obj._id, cafe: obj});
           });
+
+          if(cafeResult.lenth>0){
           return res.json(['200'], {
             message: 'cafes found',
             cafes: cafeResult
           });
+
+          else{
+              return res.badRequest({message:'no cafe with your search-criteria was found'});
+            }}
         }
       }
 
