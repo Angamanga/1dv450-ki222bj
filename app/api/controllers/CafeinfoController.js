@@ -6,7 +6,8 @@ module.exports = {
     //creates or updates a cafe depending on if an id is sent with request (update) or not (create)
     let cafeObj = req.query,
       id = req.param('id'),
-      errors = 'You make sure you entered:\n';
+      errors = 'You make sure you entered:\n',
+      email = new Buffer(req.headers.authorization.slice(6), 'base64').toString('ascii').split(':')[0]; //really should find a better way to make this DRY
 
     //deleting unwanted parameters
     Object.keys(cafeObj).forEach(key=> {
@@ -27,10 +28,9 @@ module.exports = {
       }
 
       cafeObj.coordinates = [parseFloat(cafeObj.longitude), parseFloat(cafeObj.latitude)];
-      cafeObj.createdBy = cafeObj.email;
+      cafeObj.createdBy = email;
       delete cafeObj.longitude;
       delete cafeObj.latitude;
-      delete cafeObj.email;
       Cafeinfo.create(cafeObj, (err, obj)=> {
         if (err) {
           return res.negotiate(err);
@@ -47,7 +47,7 @@ module.exports = {
         if (err) return res.negotiate(err);
         else if (!cafe) return res.badRequest('no cafe with that ID was found');
         //checking that updator is the same as creator (extra check, authorization is already done in policies/apiAuth)
-        else if (cafe.createdBy !== cafeObj.email) {
+        else if (cafe.createdBy !== email) {
           return res.forbidden('You are not allowed to edit this cafe');
         }
         else {
@@ -82,6 +82,7 @@ module.exports = {
     });
   },
   'show'(req,res,next){
+    //making more complex search depending on params included
     let searchParams = reqParams.concat('search', 'maxDistance');
     let query = req.query,
       geoquery,
@@ -90,15 +91,17 @@ module.exports = {
       limit = req.param('limit') || 25,
       offset = req.param('offset') || 0,
       maxDistance;
+
     Object.keys(query).forEach(key=> {
+    //deleting unrelevant parameters
       if (searchParams.indexOf(key) === -1) {
         delete query[key];
       }
     });
 
     if (query.longitude && query.latitude) {
-      //regex for lat/long?
-      geoquery = {
+    //creating an object for making geographical search in mongodb
+     geoquery = {
         type:'Point',
         coordinates:[parseFloat(query.longitude), parseFloat(query.latitude)]
       };
@@ -113,12 +116,13 @@ module.exports = {
     }
 
     if (query.search) {
+      //creating an object for text-search in mongodb
       textquery = {
         $regex: query.search,
         $options: 'igm'
       };
       delete query.search;
-
+      //searchquery if text-search is present (if the parameter "search" is included in the request).
       searchquery = {
         $and: [
           query,
@@ -139,9 +143,9 @@ module.exports = {
       };
     }
     else {
+      //searchquery if no text-search is present
       searchquery = query;
     }
-
       Cafeinfo.native((err, collection)=> {
         let callback = (err, cafe)=> {
           if (err) {
@@ -154,28 +158,55 @@ module.exports = {
             let cafeResult =[]
             //extracting relevant information and creating a response-object
             cafe.forEach(obj=>{
-              cafeResult.push({location:'http://' + sails.config.HOMEPATH + '/cafeinfo/' + obj.obj._id,cafe:obj.obj});
+              cafeResult.push({location:'http://' + sails.config.HOMEPATH + '/cafeinfo/' + obj._id,cafe:obj});
             });
             let resObj = {
-              message: 'cafe found',
-              cafe: cafeResult
+              message: 'cafes found',
+              cafes: cafeResult
             }
-            return res.json(['200'], cafeResult);
+            return res.json(['200'], resObj);
           }
         }
+
           if(geoquery){
+          //if lat/long was present in the request, a geographical search is performed
             collection.geoNear(geoquery,{
               maxDistance:maxDistance,
               spherical:true,
               query:searchquery
-            },(err,places)=>{
-              //this is working!
-              callback(err,places.results);
+            },(err,results)=>{
+              callback(err,results.results);
             });
           }
         else{
+            //no lat/long was present, a 'normal' search is performed
             collection.find(searchquery).sort({createdAt: -1}).skip(offset).limit(limit).toArray(callback);
           }
       });
-    }
+    },
+  destroy(req, res, next){
+    //deleting a cafe
+      let id = req.param('id'),
+      email = new Buffer(req.headers.authorization.slice(6), 'base64').toString('ascii').split(':')[0]; //really should find a better way to make this DRY
+
+    Cafeinfo.findOne({id:id}).exec((err, cafe)=> {
+        if(!cafe){
+          return res.badRequest({err:'no cafe with your id: '+ id +' was found'});
+        }
+        else if (cafe.createdBy === email) {
+        Cafeinfo.destroy({id: id}).exec((err, response)=> {
+          res.send([200], {message:'cafe with id: ' + id + ' was removed', deletedInfo:response});
+        });
+      }
+      else{
+          res.forbidden({message:'you are not allowed to remove this cafe'});
+        }
+    });
+
+  }
+  //add tags!?
+  //change auth to header
+  //change auth to auth-token, similar to this: https://thesocietea.org/2015/04/building-a-json-api-with-rails-part-4-implementing-authentication/
+  //add readme
+  //deploy...
 }

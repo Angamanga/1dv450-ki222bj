@@ -25,6 +25,10 @@ module.exports.routes = {
   'put /cafeinfo':{
     controller:'CafeinfoController',
     action:'create'
+  },
+  'delete /cafeinfo/:id':{
+    controller: 'CafeinfoController',
+    action:'destroy'
   }
   //,
   //'get /cafeinfo/near':{
