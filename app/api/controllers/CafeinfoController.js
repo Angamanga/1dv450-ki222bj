@@ -168,10 +168,10 @@ module.exports = {
             message: 'cafes found',
             cafes: cafeResult
           });
-
+          }
           else{
               return res.badRequest({message:'no cafe with your search-criteria was found'});
-            }}
+            }
         }
       }
 
