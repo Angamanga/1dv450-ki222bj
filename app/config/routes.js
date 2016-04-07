@@ -30,13 +30,4 @@ module.exports.routes = {
     controller: 'CafeinfoController',
     action:'destroy'
   }
-  //,
-  //'get /cafeinfo/near':{
-  //  controller:'CafeinfoController',
-  //  action:'findNear'
-  //},
-  //'get /cafeinfo/search':{
-  //  controller:'CafeinfoController',
-  //  action:'search'
-  //}
 };
