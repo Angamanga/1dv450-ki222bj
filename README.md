@@ -76,14 +76,15 @@ make a get to ```/cafeinfo``` with param ```APIKey=(apikey)``` and one or more o
 example of request using demo-app:
 ```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&wifi=free&name=Waynes Coffee StPer```
 
-All above search-params may be combined as the user wish to make a detailed search in the database.
+###Combined search
+All above search-params may be combined as the user wish to make a detailed search in the database. An example of combined search using demo-app:
+```http://82.196.15.113:1337/cafeinfo?latitude=59.8586&longitude=17.6389&APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&maxDistance=1000&name=Waynes Coffee StPer```
 
 ###Get one specific cafe
 Make a get to ```/cafeinfo/:id``` to get a specific cafe.
 
 example of request using demo-app:
 ```http://82.196.15.113:1337/cafeinfo/5707a4c272dd9fd2142749c9 ```
-
 
 ###Create a new cafe
 post to ```/cafeinfo``` with the all of the following parameters:
