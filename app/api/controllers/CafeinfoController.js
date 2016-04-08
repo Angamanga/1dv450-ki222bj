@@ -153,7 +153,7 @@ module.exports = {
         if (err) {
           return res.negotiate(err);
         }
-        else if (!cafe) {
+        else if (!cafe || cafe.length <1) {
           return res.badRequest({message:'no cafe with your search-criteria was found'});
         }
         else {
