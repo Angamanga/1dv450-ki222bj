@@ -182,7 +182,12 @@ module.exports = {
           spherical: true,
           query: searchquery
         }, (err, results)=> {
-          let cafes = results ? results.results : undefined;
+          let cafes = [];
+          if(results !== undefined){
+            results.results.forEach(key=>{
+              cafes.push(key.obj);
+            });
+          }
           callback(err, cafes);
         });
       }
