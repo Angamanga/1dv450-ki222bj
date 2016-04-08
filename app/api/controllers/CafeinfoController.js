@@ -55,6 +55,16 @@ module.exports = {
           return res.forbidden({message: 'You are not allowed to edit this cafe'});
         }
         else {
+          cafeObj.coordinates = cafe.coordinates;
+          if(cafeObj.longitude){
+            cafeObj.coordinates[0] = parseFloat(cafeObj.longitude);
+            delete cafeObj.longitude;
+          }
+          if(cafeObj.latitude){
+            cafeObj.coordinates[1] = parseFloat(cafeObj.latitude);
+            delete cafeObj.latitude;
+          }
+
           Cafeinfo.update({id: id}, cafeObj).exec((err, obj)=> {
             if (err) return res.negotiate(err);
             res.location('/cafeinfo/' + obj[0].id);
@@ -185,6 +195,7 @@ module.exports = {
           let cafes = [];
           if(results !== undefined){
             results.results.forEach(key=>{
+              console.log(key);
               cafes.push(key.obj);
             });
           }
