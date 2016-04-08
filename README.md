@@ -115,7 +115,7 @@ Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 ###Delete a cafe
 make a delete to ```/cafeinfo``` with an id of a cafe you have created
 
-Example of request using demo-app:
+Example of request using demo-app:  
 Delete:```http://82.196.15.113:1337/cafeinfo/570648aa0d341c43068a74dd?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&id=5707a4c272dd9fd2142749c9```  
 Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 
