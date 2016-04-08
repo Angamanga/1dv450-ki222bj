@@ -84,7 +84,7 @@ All above search-params may be combined as the user wish to make a detailed sear
 Make a get to ```/cafeinfo/:id``` to get a specific cafe.
 
 example of request using demo-app:
-```http://82.196.15.113:1337/cafeinfo/5707a4c272dd9fd2142749c9 ```
+```http://82.196.15.113:1337/cafeinfo/5707fae7566fe4f718b1b800 ```
 
 ###Create a new cafe
 post to ```/cafeinfo``` with the all of the following parameters:
