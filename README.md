@@ -121,7 +121,7 @@ Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 
 
 ###Postman-collection
-A postman-collection with all available requests can be found [here]().
+A postman-collection with all available requests can be found [here](https://github.com/Angamanga/1dv450-ki222bj/blob/master/1DV450-ki222bj-lab2.json.postman_collection).
 
 ###Exceptions
 I think I misunderstood the way tags are supposed to be implemented and therefore, the functionality is not perfect at the moment. I thought I should choose a number of tags which the users could set a value on but I have now
