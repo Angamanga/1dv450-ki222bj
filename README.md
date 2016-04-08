@@ -57,7 +57,7 @@ Queries can be made either as free-text-search, geographical-search, with tags o
 make a get to ```/cafeinfo``` with param ```search=searchWord``` and ```APIKey=(apikey)```
 
 example of free-text search to in demo-app:
-```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&search=hugos ```
+```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&search=hugos```
 
 
 ###Geographical-search
@@ -65,7 +65,7 @@ make a get to ```/cafeinfo``` with params ```latitude=(latitude of choice)```, `
 IF you want to specify a maximum distance, this may be done through sending the parameter ```maxDistance=(maxdistance in meter)```. If omitted, the distance 500 meters is set by default.
 
 example of geographical search using demo-app:
-```http://82.196.15.113:1337/cafeinfo?latitude=59.8586&longitude=17.6389&APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&maxDistance=1000 ```
+```http://82.196.15.113:1337/cafeinfo?latitude=59.8586&longitude=17.6389&APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&maxDistance=1000```
 
 
 ###Search per tag
@@ -74,7 +74,7 @@ make a get to ```/cafeinfo``` with param ```APIKey=(apikey)``` and one or more o
 ```name=```,```streetAddress=```, ```postalCode=```, ```createdBy=```, ```electricity=```(Value must be one of: 'everywhere', 'plenty', 'some' or 'nowhere') ,```wifi=```(value has must be one of: 'free', 'paid' or 'no').
 
 example of request using demo-app:
-```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&wifi=free&name=Waynes Coffee StPer```
+```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&name=Hugos Kaffe```
 
 ###Combined search
 All above search-params may be combined as the user wish to make a detailed search in the database. An example of combined search using demo-app:
@@ -84,7 +84,7 @@ All above search-params may be combined as the user wish to make a detailed sear
 Make a get to ```/cafeinfo/:id``` to get a specific cafe.
 
 example of request using demo-app:
-```http://82.196.15.113:1337/cafeinfo/5707a4c272dd9fd2142749c9 ```
+```http://82.196.15.113:1337/cafeinfo/5707fe77f91e708e196fc331 ```
 
 ###Create a new cafe
 post to ```/cafeinfo``` with the all of the following parameters:
@@ -101,7 +101,7 @@ post to ```/cafeinfo``` with the all of the following parameters:
 Make sure to add a valid Authorization-header to add the cafe.
 Example of request using demo-app:
 
-Post: ```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&name=Cafe del flore&streetAddress=172, BOULEVARD SAINT-GERMAIN &postalCode=75006 &city=Paris&latitude=48.852329924&longitude= 2.326165362&electricity=plenty&wifi=free```  
+Post: ```http://82.196.15.113:1337/cafeinfo?APIKey= IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&name=Cafe del flore&streetAddress=172, BOULEVARD SAINT-GERMAIN &postalCode=75006 &city=Paris&latitude=48.852329924&longitude= 2.326165362&electricity=plenty&wifi=free```  
 Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 
 ###Update a cafe
@@ -109,14 +109,14 @@ make a post to ```/cafeinfo``` with the parameters you want to update as well as
 
 Example of request using demo-app:
 
-Post: ```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&wifi=no&id=5707a4c272dd9fd2142749c9&name=Ninas fik```  
+Post: ```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&wifi=no&id=5707ff3af91e708e196fc332&name=Ninas fik```  
 Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 
 ###Delete a cafe
 make a delete to ```/cafeinfo``` with an id of a cafe you have created
 
 Example of request using demo-app:  
-Delete:```http://82.196.15.113:1337/cafeinfo/570648aa0d341c43068a74dd?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&id=5707a4c272dd9fd2142749c9```  
+Delete:```http://82.196.15.113:1337/cafeinfo/570648aa0d341c43068a74dd?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG```  
 Header: ```Authorization: 'Basic dXNlcjFAdXNlci5zZTp1c2VydXNlcg=='```
 
 
