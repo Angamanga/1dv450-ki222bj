@@ -4,7 +4,7 @@ A [Sails](http://sailsjs.org) application!
 ##Demo
 A demo of the app is running [here](http://82.196.15.113:1337/apikey).
 To login as a user, click sign in and create a user.
-To log in as admin, use the following user credentials:
+To log in as admin, use the following user credentials:  
 username: admin@admin.se
 password: admin
 
