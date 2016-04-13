@@ -50,7 +50,7 @@ Queries can be made either as free-text-search, geographical-search, with tags o
 make a get to ```/cafeinfo``` with param ```search=searchWord``` and ```APIKey=(apikey)```
 
 example of free-text search to in demo-app:
-```http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&search=hugos```
+<pre>http://82.196.15.113:1337/cafeinfo?APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&search=hugos</pre>
 
 
 ###Geographical-search
