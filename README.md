@@ -58,7 +58,7 @@ make a get to ```/cafeinfo``` with params ```latitude=(latitude of choice)```, `
 IF you want to specify a maximum distance, this may be done through sending the parameter ```maxDistance=(maxdistance in meter)```. If omitted, the distance 500 meters is set by default.
 
 example of geographical search using demo-app:
-```http://82.196.15.113:1337/cafeinfo?latitude=59.8586&longitude=17.6389&APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&maxDistance=1000```
+<pre>http://82.196.15.113:1337/cafeinfo?latitude=59.8586&longitude=17.6389&APIKey=IYpkp6UBo7zHCUBdql2owk2ZPLs7OBEG&maxDistance=1000</pre>
 
 
 ###Search per tag
