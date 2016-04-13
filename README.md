@@ -2,8 +2,7 @@
 A [Sails](http://sailsjs.org) application!
 
 ##Demo
-A demo of the app is running [here](http://82.196.15.113:1337/apikey).
-To login as a user, click sign in and create a user.
+A demo of the app is running at [http://82.196.15.113:1337/](http://82.196.15.113:1337/).
 
 To log in as admin, use the following user credentials:  
 username: admin@admin.se  
@@ -23,13 +22,7 @@ password: useruser
 7. run ```sails lift``` to start development server
 8. Navigate to localhost:1337/apikey
 
-#Lab 1:
-Navigate to localhost:1337/apikey or http://82.196.15.113:1337/apikey if using demo-application.
 
-###Creating an admin-user(if using the app on localhost, only needed for lab 1).
-To create an admin-user, navigate to app/api/models/User.js. Change admin.defaultsTo:true. Start development server. Create a new user.
-Stop server and change back to admin.defaultsTo:false. Start development server again and create new users, log in as admin or log in as other users and play around!
-Please raise an issue or contact me if you have any questions!
 
 #Lab 2:
 Follow the instructions above to set up development-server, or use the running application at http://82.196.15.113:1337.
@@ -126,3 +119,11 @@ A postman-collection with all available requests can be found [here](https://git
 ###Exceptions
 I think I misunderstood the way tags are supposed to be implemented and therefore, the functionality is not perfect at the moment. I thought I should choose a number of tags which the users could set a value on but I have now
 realised the tags should be like key-words which can be added by the users. That functionality is not present at the moment due to time-constraints. However, I'll sort that out when doing the client-application.
+
+#Lab 1:
+Navigate to localhost:1337/apikey or http://82.196.15.113:1337/apikey if using demo-application.
+
+###Creating an admin-user(if using the app on localhost, only needed for lab 1).
+To create an admin-user, navigate to app/api/models/User.js. Change admin.defaultsTo:true. Start development server. Create a new user.
+Stop server and change back to admin.defaultsTo:false. Start development server again and create new users, log in as admin or log in as other users and play around!
+Please raise an issue or contact me if you have any questions!
